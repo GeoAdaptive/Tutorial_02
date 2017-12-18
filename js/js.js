@@ -44,4 +44,32 @@ $(document).ready(function(){
     }).bindPopup('I\'m in Paraguay!')
     .addTo(map);
   })
-})
+});
+
+
+//commenting the code above.
+//4. Tutorial 02: Details of mapping Points, Lines and Polygons
+//4.1 Mapping Multiple Points
+var PointsUrl = "";
+$(document).ready(function(){
+  $.ajax(PointsUrl).done(function(data){
+
+  });
+};
+
+
+//4.2 Mapping Lines
+var LinesUrl = "";
+$(document).ready(function(){
+  $.ajax(LinesUrl).done(function(data){
+
+  });
+};
+
+//4.3 Mapping Polygons
+var PolygonsUrl = "";
+$(document).ready(function(){
+  $.ajax(PolygonsUrl).done(function(data){
+
+  });
+};
