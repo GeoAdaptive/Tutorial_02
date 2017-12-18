@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+  <!--here is where your web page starts to load-->
+  <body>
+    <!--here add some links to use the default styles-->
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/bootstrap.css"/>
+    <link rel="stylesheet" href="css/style.css">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300i" rel="stylesheet">
+    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script> -->
+    <!-- This request the usage of the leaflet library, which is a populat web-mapping library for open-source projects
+    Make sure you put this AFTER Leaflet's CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css"
+      integrity="sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ=="
+      crossorigin=""/>
+    <!--Make sure you put this AFTER Leaflet's CSS -->
+    <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"
+      integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log=="
+      crossorigin=""></script>
+    <!--And add this jquery documentation for downloading and parsing data-->
+    <script
+      src="https://code.jquery.com/jquery-2.2.4.min.js"
+      integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+      crossorigin="anonymous"></script>
+
+    <!-- underscore functionality -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+    <!-- PDF download function need these call -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.debug.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/2.3.2/jspdf.plugin.autotable.js"></script>
+
+    <!-- //LOAD THE SATELLITE MAP -->
+        <meta charset='utf-8' />
+        <title></title>
+        <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+        <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.38.0/mapbox-gl.js'></script>
+        <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.38.0/mapbox-gl.css' rel='stylesheet' />
+        <!-- <script src='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-image/v0.0.4/leaflet-image.js'></script> -->
+        <style>
+            body { margin:0; padding:0; }
+            #map0 { position:absolute; left:20%; right:0; top:0; height:80%; z-index:-10;}
+        </style>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+
+    <!--Below starts the content of the webpage-->
+    <div class = "topbar" >
+      <div class = "topbuttons" style="display:inline-block;">
+        <a href = "http://geoadaptive.com/" target = "_blank"  id ="aboutbutton">About</a>
+        <a href = "http://www.dgeec.gov.py/" target = "_blank"  id ="databutton">Data</a>
+        <a href = "http://geoadaptive.com/" target = "_blank"  id ="contactbutton">Contact</a>
+
+      </div>
+    </div>
+    <!--The mapping portal here starts from the top edge of your screen, takes the full width 100%, the height 84%-->
+    <!-- <div id='map0'></div> -->
+    <div id='map1' style="position: absolute; top: 3%; right:0; width:80%; height:97%; z-index:-10;"></div>
+    <div id="map" style="position: absolute; top: 3%; right:0; width:80%; height:97%; z-index:20;"></div>
+    <div class="hint">
+      <p> Hint*: Click the boundaries to read statistics.</p>
+    </div>
+
+    <!--We can add the title of your webmap here-->
+    <div class= "sidepanel" style = "position:absolute; left:0; width:20%; height:100%; z-index:20;">
+      <h2 id = "title"> Social Development Explorer </h2>
+
+      <!-- <p id = "description"> This is a webmap-based data visualization platform developed by GeoAdaptive to understand the social-economic condition of Paraguay and its spatial distribution through a series of widely-acknowledged indicators.</p> -->
+      <!-- Paraguay is a landlocked country in central South America, bordered by Argentina to the south and southwest, Brazil to the east and northeast, and Bolivia to the northwest. -->
+
+      <div class="option" class="leaflet-bar">
+        <label>Select Geography </label><br>
+        <select name="basemaps" id="location1" onChange="changeBasemap1(this)">
+          <option class = "option" value="">Country</option>
+          <option class = "option" value="Paraguay">Paraguay</option>
+          <option class = "option" value="Brazil">Brazil</option>
+
+        </select> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <select name="basemaps" id="location2" onChange="changeBasemap2(this)">
+          <option class = "option" value="">Department</option>
+          <option class = "option" value="Asunción">Asunción</option>
+          <option class = "option" value="Alto Paraná">Alto Paraná</option>
+
+        </select>
+      </div>
+      <!-- <br> -->
+
+      <div class="option" class="leaflet-bar">
+        <label>Select Indicators </label><br>
+        <select name="basemaps" id="location3" onChange="changeBasemap3(this)">
+          <option class = "option" value="">Indicator</option>
+          <option class = "option" value="Paraguay">Poverty Rate</option>
+          <option class = "option" value="Brazil">School Density</option>
+          <option class = "option" value="Paraguay">Life Expectancy</option>
+          <option class = "option" value="Brazil">Literacy Rate</option>
+          <option class = "option" value="Paraguay">Water Sanitation Coverage</option>
+          <option class = "option" value="Brazil">Total Length of Road</option>
+        </select>
+      </div>
+      <!-- <br> -->
+      <div class="option" class="leaflet-bar">
+        <label>Select Comparison </label><br>
+        <select name="basemaps" id="location4" onChange="changeBasemap4(this)">
+          <option class = "option" value="">Comparison Geography</option>
+          <option class = "option" value="Paraguay">Latin America</option>
+          <option class = "option" value="Brazil">World Average</option>
+        </select>
+      </div>
+      <br>
+
+      <div class = "control">
+        <button class="btn btn-default dropdown-toggle" type="button" id ="showmap">
+          Show on Map
+        </button>
+        &nbsp;
+        <!-- <button class="btn btn-default dropdown-toggle" type="button" id="hreport" onclick="tableToPDF1()" data-toggle="dropdown" aria-haspopup="true">
+          Generate Report
+        </button> -->
+        &nbsp;
+        <button class="btn btn-default dropdown-toggle" type="button" id ="reset">
+          Clear Selection
+        </button>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <!-- <h5>Additional Resources</h5>
+        <a href = "https://geoadaptive.github.io/satellite_basemap_v3/" target="_blank">1. agricultural expansion in Loma Plata</a>
+        <br>
+        <a href = "https://geoadaptive.github.io/semi_rastermap_v1/" target="_blank">2. middle schools in Asuncion</a> -->
+      </div>
+
+
+      <!-- <div class = "customize">
+        <label>2. Customize Your Analysis </label>
+        <br>
+        <label>Poverty Rate between (%) </label>
+        <br>
+        <input class = "thresholdinput" id = "input1l"></input>
+        &nbsp;
+        to
+        &nbsp;
+        <input class = "thresholdinput" id = "input1h"></input>
+
+        <br>
+        <br>
+        <label>School Density between (per 10,000 people) </label>
+        <br>
+        <input class = "thresholdinput" id = "input2l"></input>
+        &nbsp;
+        to
+        &nbsp;
+        <input class = "thresholdinput" id = "input2h"></input>
+
+        <br>
+        <br>
+      </div> -->
+
+
+      <div class="chartsarea">
+        <canvas class="charts" id="myChart"></canvas>
+      </div>
+    </div>
+
+    <div class="dropdown2">
+        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+          BaseMaps
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+            <li id = "light"><a class = "option" href="#">Light</a></li>
+            <li id = "dark"><a class = "option" href="#">Dark</a></li>
+            <li id = "satellite"><a class = "option" href="#">Satellite</a></li>
+        </ul>
+    </div>
+
+
+    <!-- <div class="description">
+        <div class="hazards">
+          <div id = "destext1">
+            <strong>1. INTRODUCTORY PROFILE</strong>
+            <br><br>
+            <p>A basic understanding of the current conditions in the selected locations and a profile of challenges faced by the locality. Data come from preliminary research and are organized in a simple way. </p>
+          </div>
+          <button class="btn btn-default dropdown-toggle" type="button" id="hreport" onclick="tableToPDF1()" data-toggle="dropdown" aria-haspopup="true">
+            Download Profile
+          </button>
+        </div>
+
+        <div class="impacts">
+          <div id = "destext2">
+            <strong>2. INTERMEDIATE ANALYSIS</strong>
+            <br><br>
+            <p>An intermediate understanding of the critical issues and their causes in the selected locations and a profile of challenges as well as opportunities for the locality. Information are collected from organized research, data analysis and are organized in a systematic way. </p>
+          </div>
+          <button class="btn btn-default dropdown-toggle" type="button" id="ireport" onclick="tableToPDF2()" data-toggle="dropdown" aria-haspopup="true">
+            Download Analysis
+          </button>
+        </div>
+
+        <div class="reporting">
+          <div id = "destext3">
+            <strong>3. ADVANCED ANALYSIS</strong>
+            <br><br>
+            <p>A wholistic and systemic bundle of strategic insights about the fundamental causes of the critical problems present in the selected locations and beyond. Expertise-level professional research and critical analysis are conducted, both qualitatively and quantitatively. The entire package of important information is delivered through an indepth report and database. </p>
+          </div>
+          <button class="btn btn-default dropdown-toggle" type="button" id="areport" onclick="tableToPDF3()" data-toggle="dropdown" aria-haspopup="true">
+            Download Report
+          </button>
+
+          <!this code below will redirect to the PDF page-->
+          <!-- <form method = "get" action = "test1.pdf">
+            <button type = "submit"> Download! </button>
+          </form> -->
+
+        </div>
+    </div> -->
+
+    <!-- <div class = "download">
+      <label class = "reportitle">Report Section</label><br><br>
+      <label class = "reportype">1. Introductory Profile</label>
+      <button class="btn btn-default dropdown-toggle" type="button" id ="download1" onclick="tableToPDF1()">
+        Download
+      </button>
+      <br><br>
+      <label class = "reportype">2. Intermediate Analysis</label>
+      <button class="btn btn-default dropdown-toggle" type="button" id ="download2" onclick="tableToPDF2()">
+        Download
+      </button>
+      <br><br>
+      <label class = "reportype">3. Advanced Analysis</label>
+      <button class="btn btn-default dropdown-toggle" type="button" id ="download3" onclick="tableToPDF3()">
+        Download
+      </button>
+    </div> -->
+
+
+
+
+    <img id = "logo" src="https://preview.ibb.co/i2z8FQ/logo.png">
+    <img id = "clientlogo" src="https://preview.ibb.co/eCnXqG/Logo_BID_es.png">
+
+
+    <div class="legend" id = "legend">
+        <h5>Percentage of Population in Poverty </h5>
+        <div id = "box1">
+          <div class = "label1" id = "fill1" ></div><p class = label1> < 10% </p>
+        </div>
+        <div id = "box2">
+          <div class = "label1" id = "fill2" ></div><p class = label1> 10% - 20% </p>
+        </div>
+        <div id = "box3">
+          <div class = "label1" id = "fill3" ></div><p class = label1> 20% - 30% </p>
+        </div>
+        <div id = "box4">
+          <div class = "label1" id = "fill4" ></div><p class = label1> 30% - 40% </p>
+        </div>
+        <div id = "box5">
+          <div class = "label1" id = "fill5" ></div><p class = label1> > 40% </p>
+        </div>
+    </div>
+
+
+    <!--usually put the request for javascript files here, it controls the operations of the application-->
+    <script src="js/js.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  </body>
+  <!--the application ends-->
+</html>
