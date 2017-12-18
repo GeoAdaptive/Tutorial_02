@@ -75,7 +75,7 @@ $(document).ready(function(){
       {
         style: {opacity:1,width:0.5,color:'#D35400'},
         pointToLayer: function (feature, latlng) {
-        return new L.Polygon(latlng, {
+        return new L.Polyline(latlng, {
         });
       },
     }).bindPopup('I\'m a polyline!')
