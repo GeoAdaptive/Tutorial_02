@@ -24,12 +24,27 @@
 
     <!--Below starts the content of the webpage-->
     <!--The mapping portal here starts from the top edge of your screen, takes the full width 100%, the height 84%-->
-    <div id="map" style="position: absolute; right:0; width:80%; height:100%; z-index:20;"></div>
+    <div id="map" style="position: absolute; right:0; top:0; width:80%; height:100%; z-index:20;"></div>
     <!--We can add the title of your webmap here-->
-    <div id="sidepanel">
+    <div class="sidepanel">
       <h2 id="title"> Change your title here</h2>
       <p id="description"> Mapping points, polylines, and polygons to an interactive webmap. </p>
-      <img id="logo" src="https://preview.ibb.co/i2z8FQ/logo.png">
+      <!-- this <br> code breaks the line into another line. -->
+      <br>
+      <!-- here we can add two buttons controlling the mapping actions. -->
+      <button class="btn btn-default dropdown-toggle" type="button" id ="mappoints">
+        Points
+      </button>
+      <button class="btn btn-default dropdown-toggle" type="button" id ="mappolylines">
+        Polylines
+      </button>
+      <button class="btn btn-default dropdown-toggle" type="button" id ="mappolygons">
+        Polygons
+      </button>
+      <button class="btn btn-default dropdown-toggle" type="button" id ="reset">
+        Clear Selection
+      </button>
+      <!-- <img id="logo" src="https://preview.ibb.co/i2z8FQ/logo.png"> -->
     </div>
 
 

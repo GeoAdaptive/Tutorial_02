@@ -29,6 +29,9 @@ L.marker([-25.262, -57.581]).addTo(map)
 ///3. Adding the layer data to be mapped
 // calling the data to be mapped, that is in this case, stored within the Github repo data folder
 var Paraguay_Department = "https://raw.githubusercontent.com/GeoAdaptive/Resources_library/master/Example_Paraguay/data/ADM_PRY_DEP.geojson?token=AgSQK2E68ldQRZyJTVEkUhY-YQb960hYks5aNCaMwA%3D%3D";
+var MappedPoints;
+var MappedPolylines;
+var MappedPolygons;
 
 //use this function to download and create mappable objects
 // $(document).ready(function(){
@@ -54,15 +57,14 @@ var PointsUrl = "https://raw.githubusercontent.com/GeoAdaptive/Tutorial_02/maste
 $(document).ready(function(){
   $.ajax(PointsUrl).done(function(data){
     var parsedData = JSON.parse(data);
-    var MappedObjects = L.geoJSON(parsedData,
+    MappedPoints = L.geoJSON(parsedData,
       {
         style: {opacity:1,radius:1,width:0.5,color:'#85C1E9'},
         pointToLayer: function (feature, latlng) {
         return new L.circleMarker(latlng, {
         });
       },
-    }).bindPopup('I\'m a point!')
-    .addTo(map);
+    }).bindPopup('I\'m a point!');
   });
 });
 
@@ -71,15 +73,14 @@ var LinesUrl = "https://raw.githubusercontent.com/GeoAdaptive/Tutorial_02/master
 $(document).ready(function(){
   $.ajax(LinesUrl).done(function(data){
     var parsedData = JSON.parse(data);
-    var MappedObjects = L.geoJSON(parsedData,
+    MappedPolylines = L.geoJSON(parsedData,
       {
         style: {opacity:1,width:0.5,color:'#D35400'},
         pointToLayer: function (feature, latlng) {
         return new L.Polyline(latlng, {
         });
       },
-    }).bindPopup('I\'m a polyline!')
-    .addTo(map);
+    }).bindPopup('I\'m a polyline!');
   });
 });
 
@@ -88,14 +89,29 @@ var PolygonsUrl = "https://raw.githubusercontent.com/GeoAdaptive/Tutorial_02/mas
 $(document).ready(function(){
   $.ajax(PolygonsUrl).done(function(data){
     var parsedData = JSON.parse(data);
-    var MappedObjects = L.geoJSON(parsedData,
+    MappedPolygons = L.geoJSON(parsedData,
       {
         style: {opacity:1,width:0.5,color:'#F9E79F'},
         pointToLayer: function (feature, latlng) {
         return new L.Polygon(latlng, {
         });
       },
-    }).bindPopup('I\'m a polygon!')
-    .addTo(map);
+    }).bindPopup('I\'m a polygon!');
   });
+});
+
+//5.1 Control the display
+$('#mappoints').click(function(){
+  map.addLayer(MappedPoints);
+  console.log("points mapped!");
+});
+
+$('#mappolylines').click(function(){
+  map.addLayer(MappedPolylines);
+  console.log("points mapped!");
+});
+
+$('#mappolygons').click(function(){
+  map.addLayer(MappedPolygons);
+  console.log("points mapped!");
 });
