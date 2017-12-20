@@ -127,3 +127,11 @@ $('#mappolygons').click(function(){
   map.addLayer(MappedPolygons);
   console.log("points mapped!");
 });
+
+
+//5.2 Clear Selection
+$('#reset').click(function(){
+  map.removeLayer(MappedPoints);
+  map.removeLayer(MappedPolylines);
+  map.removeLayer(MappedPolygons);
+})
