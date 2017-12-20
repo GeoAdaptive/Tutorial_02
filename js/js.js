@@ -1,3 +1,9 @@
+// here is the first comment.
+// here is the first comment.
+// here is the first comment.
+// here is the first comment.
+
+
 ///This is a 3-STEP process
 /// 1. Setting up the Basemap
 // here this function sets up the name (to match the id of the map div element in the HTML), the center with coordinates(latitude, longitude), and the zoom level(larger level, more zoom-in) for the map.
@@ -28,7 +34,7 @@ L.marker([-25.262, -57.581]).addTo(map)
 
 ///3. Adding the layer data to be mapped
 // calling the data to be mapped, that is in this case, stored within the Github repo data folder
-var Paraguay_Department = "https://raw.githubusercontent.com/GeoAdaptive/Resources_library/master/Example_Paraguay/data/ADM_PRY_DEP.geojson?token=AgSQK2E68ldQRZyJTVEkUhY-YQb960hYks5aNCaMwA%3D%3D";
+// var Paraguay_Department = "https://raw.githubusercontent.com/GeoAdaptive/Resources_library/master/Example_Paraguay/data/ADM_PRY_DEP.geojson?token=AgSQK2E68ldQRZyJTVEkUhY-YQb960hYks5aNCaMwA%3D%3D";
 var MappedPoints;
 var MappedPolylines;
 var MappedPolygons;
@@ -54,22 +60,28 @@ var MappedPolygons;
 //4. Tutorial 02: Details of mapping Points, Lines and Polygons
 //4.1 Mapping Multiple Points
 var PointsUrl = "https://raw.githubusercontent.com/GeoAdaptive/Tutorial_02/master/data/INFR_middleschool_Paraguay.geojson";
+// console.log("points url linked.");
 $(document).ready(function(){
   $.ajax(PointsUrl).done(function(data){
+    // console.log("ajax performed.");
     var parsedData = JSON.parse(data);
+    // console.log("parsedata being created.");
     MappedPoints = L.geoJSON(parsedData,
       {
-        style: {opacity:1,radius:1,width:0.5,color:'#85C1E9'},
+        style: {opacity:0.2,radius:10,width:0.5,color:'#00C1E9'},
         pointToLayer: function (feature, latlng) {
         return new L.circleMarker(latlng, {
         });
       },
     }).bindPopup('I\'m a point!');
+    console.log("points mapped.");
   });
 });
 
+
 //4.2 Mapping Lines
 var LinesUrl = "https://raw.githubusercontent.com/GeoAdaptive/Tutorial_02/master/data/primaryroads.geojson";
+console.log("points url linked again.");
 $(document).ready(function(){
   $.ajax(LinesUrl).done(function(data){
     var parsedData = JSON.parse(data);
